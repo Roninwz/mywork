@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加会员-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" href="/static/admin1/css/font.css">
+        <link rel="stylesheet" href="/static/admin1/css/weadmin.css">
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+	</head>
+
+	<body>
+		<div class="weadmin-body">
+			<form class="layui-form">
+                <input type="text" name="id" id="id" value="<%=data.id%>" hidden>
+				<div class="layui-form-item">
+					<label for="L_username" class="layui-form-label">
+		                <span class="we-red">*</span>管理员名
+		            </label>
+					<div class="layui-input-inline">
+						<input type="text" id="adminname" name="adminname" value="<%=data.adminname%>" lay-verify="" autocomplete="off" class="layui-input">
+					</div>
+					<!-- <div class="layui-form-mid layui-word-aux">
+						请设置至少5个字符，将会成为您唯一的登录名
+					</div> -->
+                </div>
+                <div class="layui-form-item">
+					<label for="L_email" class="layui-form-label">
+		                <span class="we-red">*</span>管理员密码
+		            </label>
+					<div class="layui-input-inline">
+						<input type="text" id="adminpass" name="adminpass" value="<%=data.adminpass%>" lay-verify="required" autocomplete="" class="layui-input">
+					</div>
+                </div>
+               
+            
+				<div class="layui-form-item">
+					<label for="L_repass" class="layui-form-label">
+              </label>
+                    <!-- <button class="layui-btn" lay-filter="add" lay-submit="/friend/add">确定</button> -->
+                    <input  class="layui-btn" type="submit" id="edit"  value="确任修改">
+				</div>
+			</form>
+		</div>
+        <script type="text/javascript" src="/static/libs/layui/layui.js"></script>
+
+		
+		<script>
+			layui.extend({
+				admin: '{/}../../static/admin1/js/admin'
+			});
+			layui.use(['form', 'jquery','util','admin', 'layer'], function() {
+           
+        
+				var form = layui.form,
+					$ = layui.jquery,
+					util = layui.util,
+					admin = layui.admin,
+					layer = layui.layer;
+                    $('#edit').on('click', function() {
+                        var adminname=$("#adminname").val();
+                        var id=$("#id").val();
+                        var adminpass=$("#adminpass").val();
+                        //测试用户是否录入信息
+                        if(adminname==""||adminpass==""){
+                            layer.alert('请填入相关信息', {icon: 2});
+                            return;
+                        }
+                        $.post("/admin/edit",{id:id,adminname:adminname,adminpass:adminpass},function(result){
+                            if(result.status==="success"){
+                                layer.alert('修改成功。', {icon: 1});
+                                parent.location.reload(); // 父页面刷新
+                                //当你在iframe页面关闭自身时
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭   
+                            }else if(result.status==="user_exist"){
+                                layer.alert('用户已存在，请勿重复添加！', {icon: 2});
+                            }
+                            else{
+                                layer.alert('添加失败！', {icon: 2});
+                            }
+                        });
+                        //这句话的意思不会刷新当前页面。避免清空内容
+                        return false;
+                    });
+			
+			});
+		</script>
+	</body>
+
+</html>

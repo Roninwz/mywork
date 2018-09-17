@@ -1,0 +1,21 @@
+{
+    "name": "mywork",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "supervisor ./bin/www",
+        "run dev": "supervisor  ./bin/www"
+    },
+    "dependencies": {
+        "chalk": "^2.3.0",
+        "cookie-parser": "~1.4.3",
+        "debug": "~2.6.9",
+        "ejs": "~2.5.7",
+        "express": "~4.16.0",
+        "http-errors": "~1.6.2",
+        "mongodb": "^2.2.26",
+        "mongoose": "^4.9.9",
+        "morgan": "~1.9.0",
+        "node-uuid": "^1.4.8"
+    }
+}
