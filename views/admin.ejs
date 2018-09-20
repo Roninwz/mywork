@@ -158,16 +158,6 @@
             //     var type = $(this).data('type');
             //     active[type] ? active[type].call(this) : '';
             //   });
-
-            //    $('#addadmin').on('click', function(){
-            //     layer.open({
-            //               type: 2, 
-            //               title:'添加管理员',
-            //               area: ['500px', '300px'],
-            //               content: '/admin/add'
-            //             }); 
-            // });
-
             //页面初始化的时候执行
             $(function () {
                 getData(1);
@@ -262,11 +252,11 @@
                 var obj = $(this);
                 var id = obj.parents('tr').attr('id');
                 var index = layer.open({
-                        type: 2,
-                        title: '编辑管理员',
-                        area: ['500px', '300px'],
-                        content: '/admin/edit?id=' + id//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-                    });
+                    type: 2,
+                    title: '编辑管理员',
+                    area: ['500px', '300px'],
+                    content: '/admin/edit?id=' + id//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                });
 
             });
             $('#addadmin').on('click', function () {
@@ -281,29 +271,7 @@
 
 
 
-            //监听表格复选框选择
-            table.on('checkbox(idTest)', function (obj) {
-                console.log(obj)
-            });
-            //监听工具条
-            table.on('tool(idTest)', function (obj) {
-                var data = obj.data;
-                if (obj.event === 'detail') {
-                    layer.msg('ID：' + data.id + ' 的查看操作');
-                } else if (obj.event === 'del') {
 
-                } else if (obj.event === 'edit') {
-
-                    var index = layer.open({
-                        type: 2,
-                        title: '编辑管理员',
-                        area: ['500px', '300px'],
-                        content: '/admin/edit?id=' + data.id//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-                    });
-
-                    // layer.alert('编辑行：<br>'+ JSON.stringify(data))
-                }
-            });
 
 
         });
