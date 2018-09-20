@@ -20,6 +20,7 @@ exports.addFriend = function(req, res) {
         }else{
             vsex=1;
         }
+        console.log('-'+friendname+'-'+tel+'-'+qq+'-'+email+'-'+age+"-"+birthday+'-'+address+'-'+sex+'-');
     var data=new Friend(
         {
             id:uuid.v1(),
@@ -71,3 +72,64 @@ exports.getFriends = function(req, res) {
     });
   };
   
+  
+exports.editFriend = function(req, res) {
+    var id=req.query.id;
+
+    console.log("wwwwwwwwwwww");
+    console.log('id:'+id);
+    Friend.findOne({id:id},function(err,data){
+
+        if(err){
+
+        }else{
+            res.render("editfriend",{'data':data});
+        }
+      
+    });
+  
+
+};
+exports.toEditFriend = function(req, res) {
+    var id=req.body.id;
+    var friendname=req.body.friendname;
+    var tel=req.body.tel;
+    var qq=req.body.qq;
+    var email=req.body.email;
+    var age=req.body.age;
+    var birthday=req.body.birthday;
+    var address=req.body.address;
+    var sex=req.body.sex;
+    var vsex;
+        if("男"==sex){
+            vsex=0;
+        }else{
+            vsex=1;
+        }
+        console.log(id+'-'+friendname+'-'+tel+'-'+qq+'-'+email+'-'+age+"-"+birthday+'-'+address+'-'+sex+'-');
+    var whereData = {"id":id}
+    var updateDat = {$set: {"friendname":friendname,'tel':tel,'qq':qq,'email':email,'age':age,'birthday':birthday,'address':address,'sex':vsex}}; //如果不用$set，替换整条数据
+    Friend.update(whereData, updateDat, function(error, result){
+        if(error){
+            res.json({"status":"error"})
+        }else{
+            // res.redirect('/admin')
+           res.json({"status":"success"});
+        }
+    });
+
+};
+
+//删除一个管理员
+exports.delFriend= function(req, res) {
+    var id=req.body.id;
+    console.log(id);
+    Friend.remove({id:id},function(err,doc){
+        if(err){
+            res.json({"status":"error"});
+        }else{
+            res.json({"status":"success"})
+        }
+    });
+
+};

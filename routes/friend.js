@@ -12,5 +12,8 @@ router.get('/add', function(req, res, next) {
 });
 router.post('/add',friend.addFriend);
 
+router.get('/edit',friend.editFriend);
+router.post('/edit',friend.toEditFriend);
+router.post('/delFriend',friend.delFriend);
 router.post('/list', friend.getFriends);
 module.exports = router;
